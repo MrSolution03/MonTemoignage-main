@@ -1,0 +1,68 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title%}Contact{% endblock %}
+<script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+{% block content%}
+   {% include 'navigation.html'%}
+   <div class="min-h-screen  flex flex-col justify-center py-8 sm:px-6 lg:px-8 hover:bg-slate-200" style="transition:all 2s ease-in-out">
+    <div class="mx-auto w-5/6 max-w-2xl">
+      <h2 class="text-center text-3xl font-extrabold text-gray-900">Contact Us</h2>
+    </div>
+
+    <div class="mt-4 mx-auto w-5/6 max-w-2xl px-4 sm:px-8 py-6 sm:py-8 bg-white shadow rounded-lg">
+      <div class="space-y-6">
+        <p class="text-center text-gray-700">Nous sommes Montemoignage Blog, une plateforme chrétienne pour vous édifier avec des témoignages chrétiens. Vous pouvez nous envoyer votre témoignage sur l'un de nos réseaux sociaux ci-dessous. Une fois votre témoignage reçu, nous le publierons et le partagerons sur notre blog. Nous vous enverrons ensuite le lien pour que vous puissiez le partager à votre tour. Merci.</p>
+
+        <div class="flex justify-center space-x-4">
+          <button class="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button" onclick="openTwitterMessenger()">
+            <i class="fab fa-twitter"></i>
+          </button>
+          
+          <button class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button" onclick="openInstagramMessenger()">
+            <i class="fab fa-instagram"></i>
+          </button>
+
+          <button class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button" onclick="openGmailComposer()">
+            <i class="fab fa-google"></i>
+          </button>
+          
+          <button class="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button" onclick="openFacebookMessenger()">
+            <i class="fab fa-facebook-square"></i>
+          </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+    <div style="position:absolute; width:100%">
+        {% include 'footer.html'%}
+    </div>
+
+    <!-- Add the JavaScript functions below the HTML code -->
+
+<script>
+  function openTwitterMessenger() {
+    // Replace 'your_twitter_username' with your actual Twitter username
+    window.open('https://twitter.com/messages/compose?text=Message%20to%20your%20Twitter%20account&recipient_id=@MonTemoignage', '_blank');
+  }
+  
+  function openInstagramMessenger() {
+    // Replace 'your_instagram_username' with your actual Instagram username
+    window.open('https://www.instagram.com/direct/new/?user=weare_montemoignage&message=Message%20to%20your%20Instagram%20account', '_blank');
+  }
+  
+  function openGmailComposer() {
+    // Replace 'your_email_address' with your actual email address
+    window.open('mailto:montemoignage.christ@gmail.com', '_blank');
+  }
+
+  function openFacebookMessenger() {
+    // Replace 'your_facebook_username' with your actual Facebook username or profile URL
+    window.open('https://www.facebook.com/messages/t/100093389512601', '_blank');
+  }
+  
+
+</script>
+{% endblock %}
+
+

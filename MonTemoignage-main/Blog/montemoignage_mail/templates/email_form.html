@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white w-96 rounded-lg shadow-md p-8">
+    <h1 class="text-3xl font-bold text-center mb-8">Message de l'administrateur</h1>
+    <form action="{% url 'admin_email' %}" method="POST">
+      {% csrf_token %}
+      <div class="mb-6">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="subject">Objet:</label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="subject" name="subject" type="text" required>
+      </div>
+      <div class="mb-6">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="message">Message:</label>
+        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32 resize-none" id="message" name="message" required></textarea>
+      </div>
+      <div class="flex justify-end">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Send Email</button>
+      </div>
+    </form>
+
+    <p id="success-message" class="text-green-600 font-bold text-center mt-4" style="display: none;"></p>
+  </div>
+
+
+  <!-- Add this code to your email_form.html template -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('form').submit(function(event) {
+      event.preventDefault(); // Prevent form submission
+      
+      var form = $(this);
+      var url = form.attr('action');
+      var formData = form.serialize();
+      
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: formData,
+        success: function(response) {
+          if (response.success) {
+            $('#success-message').text(response.message);
+            $('#success-message').show();
+            form.trigger('reset');
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+
+</html>

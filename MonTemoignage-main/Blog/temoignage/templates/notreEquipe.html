@@ -1,0 +1,38 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title%}A propos{% endblock %}
+
+{% block content%}
+   {% include 'navigation.html'%}
+   <div style="position:relative; display:block;top:6.55rem; z-index:-1">
+        <section class="bg-white dark:bg-gray-900">
+          <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 hover:bg-slate-200" style="transition:all 2s ease-in-out">
+              <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
+                  <h2 class="mb-4 text-4xl  font-extrabold text-gray-900 dark:text-white">Notre Team</h2>
+              <p class=" text-gray-500 lg:mb-16 dark:text-gray-400">Nous sommes une équipe passionnée par la foi et désireuse de vous apporter des histoires de vie transformées par la puissance de Dieu. Ces témoignages authentiques sont une source d'encouragement et de renforcement de la foi. Rejoignez-nous dans cette aventure de témoignages chrétiens inspirants et découvrez comment la grâce et l'amour de Dieu peuvent changer des vies.</p>
+
+              </div> 
+              <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
+                  
+                 {% for x in team %}
+                  <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
+                      <a href="#">
+                          <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{ x.image.url }}" alt="Michael Avatar">
+                      </a>
+                      <div class="p-5">
+                          <h3 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                              <a href="#">{{ x.name | safe }}</a>
+                          </h3>
+                          <span class="text-gray-500 dark:text-gray-400">President</span>
+                          <p class="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">{{ x.description |safe }}</p>
+                      </div>
+                  </div> 
+                 {% endfor %}
+              </div>  
+          </div>
+        </section>
+    </div>
+    <div style="position:absolute; padding-top:7rem; width:100%">
+    {% include 'footer.html'%}
+</div>
+{% endblock %}

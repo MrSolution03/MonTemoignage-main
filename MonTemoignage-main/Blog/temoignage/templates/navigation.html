@@ -1,0 +1,47 @@
+
+  {% load static %}
+
+  <div style="position:fixed; width:100%; z-index:999;">
+    <nav class="nav-bar">
+      <div class="box logo">
+        <a href="/">
+          <img src="{% static 'logored.png' %}">
+        </a>
+      </div>
+      <div class="box list left-side">
+        <ul>
+          <li><a href="/">Acceuil</a></li>
+          <li><a href="/notreEquipe">Team</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/recevoirJesus">Recevoir Jesus</a></li>
+          <li><a href="/video">Videos</a></li>
+          <li><a href="/text">Articles</a></li>
+        </ul>
+      </div>
+    </nav>
+    <span class="material-symbols-outlined menu-btn">menu</span>
+    <div class="menu">
+      <span class="material-symbols-outlined close-btn">close</span>
+      <ul>
+        <li><a href="/">Acceuil</a></li>
+        <li><a href="/recevoirJesus">Recevoir Jesus</a></li>
+        <li><a href="/video">Video</a></li>
+          <li><a href="/text">Article</a></li>
+        <li><a href="/notreEquipe">Team</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  
+
+  <script>
+    $(document).ready(function(){
+      $('.menu-btn').click(function(){
+          $('.menu').slideToggle();
+      })
+
+      $('.close-btn').click(function(){
+        $('.menu').slideToggle();
+    })
+    })
+  </script>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Success Message</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="flex items-center justify-center h-screen">
+  <div class="bg-gray-100 rounded-lg p-8 shadow-md">
+    <h1 class="text-2xl mb-6">Email Sent Successfully!</h1>
+  </div>
+
+
+  <!-- Add this code to your email_form.html template -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('form').submit(function(event) {
+      event.preventDefault(); // Prevent form submission
+      
+      var form = $(this);
+      var url = form.attr('action');
+      var formData = form.serialize();
+      
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: formData,
+        success: function(response) {
+          if (response.success) {
+            $('#success-message').text(response.message);
+            $('#success-message').show();
+            form.trigger('reset');
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
+    });
+  });
+</script>
+</body>
+
+</html>

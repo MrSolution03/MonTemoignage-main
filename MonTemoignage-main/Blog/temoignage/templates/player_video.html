@@ -1,0 +1,208 @@
+{% extends 'base.html'%} 
+{% load static %} 
+{% load social_share %} 
+{% block title%}Lecture{% endblock %} 
+{% block content%} 
+{% include 'navigation.html'%}
+<div style="position: relative; top: 7rem">
+  <div class="player-box">
+    
+      <div class="content" style="position: relative; overflow: hidden;">
+          {{Detail.video | safe}}
+      </div>
+
+    <div style="padding-bottom: 1rem">
+      <span class="title"><b>Titre</b> : {{ Detail.titre }}</span>
+      <span><b>Auteur</b> : {{ Detail.nomAuteur }}</span><br />
+      <span><b>Categorie</b> : {{ categorie }}</span>
+    </div>
+    <div class="partager">
+      <div
+        style="
+          display: flex;
+          flex-direction:column;
+          justify-content: center;
+          {% comment %} align-items: center; {% endcomment %}
+          width: 200px;
+        "
+      >
+        <h5 class="text-xl fonat-semibold text-blueGray-700 text-black my-3">
+          Partager:
+        </h5>
+        <div
+          class="flex space-x-4"
+          style="
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+          "
+        >
+          <a
+            href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text=Partagez%20aussi%20avec%20les autres"
+            target="_blank"
+          >
+            <button
+              class="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+              type="button"
+            >
+              <i class="fab fa-twitter"></i>
+            </button>
+          </a>
+
+          <a
+            href="https://www.facebook.com/sharer.php?u={{ request.build_absolute_uri }}"
+            target="_blank"
+          >
+            <button
+              class="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+              type="button"
+            >
+              <i class="fab fa-facebook-square"></i>
+            </button>
+          </a>
+          <a
+            href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }}"
+            target="_blank"
+          >
+            <button
+              class="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+              type="button"
+            >
+              <i class="fab fa-whatsapp"></i>
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="comment-container">
+      <div class="comment">
+        <form
+          id="comment-form"
+          class="post-comment"
+          action="{% url 'player_video' slug=Detail.slug %}"
+          method="post"
+        >
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              width: 100%;
+              background-color: #f3f4f6;
+              padding: 0.5rem;
+              border-radius: 0.5rem;
+            "
+          >
+            {{ form.as_p }} {% csrf_token %}
+            <div style="display: flex; flex-direction: column; padding: 1rem">
+              <button class="submit" type="submit" style="width: 200px">
+                Commenter
+              </button>
+            </div>
+          </div>
+        </form>
+        <div id="total-commentaire">
+          <p style="border-bottom: 1px solid red; padding-top: 1rem">
+            ..... Commentaire .....
+          </p>
+        </div>
+        <hr />
+
+        <div
+          class="commentaire-box"
+          style="margin-top: 0.5rem"
+          id="comment-list"
+        >
+          {% for comment in comments %} {% if comment %}
+          <div class="max-w-md mx-auto bg-gray-100 rounded-lg p-4 my-4">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0">
+                <div
+                  class="w-10 h-10 rounded-full bg-gray-300 flex justify-center items-center"
+                >
+                  <i class="fa fa-user-o text-base" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="flex-grow">
+                <h4 class="text-gray-900 font-bold text-lg">{{comment.nom}}</h4>
+                <p class="text-gray-600 text-sm">{{comment.date}}</p>
+              </div>
+            </div>
+            <p class="mt-4 text-gray-800">{{comment.commentaire|safe}}</p>
+          </div>
+
+          {% else %}
+          <div class="max-w-md mx-auto bg-gray-100 rounded-lg p-4 my-4">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0">
+                {% comment %}
+                <div
+                  class="w-10 h-10 rounded-full bg-gray-300 flex justify-center items-center"
+                >
+                  <i class="fa fa-user-o text-base" aria-hidden="true"></i>
+                </div>
+                {% endcomment %}
+              </div>
+              <div class="flex-grow">
+                <h4 class="text-gray-900 font-bold text-lg"></h4>
+                <p class="text-gray-600 text-sm"></p>
+              </div>
+            </div>
+            <p class="mt-4 text-gray-800">Zero commentaire!</p>
+          </div>
+          {% endif %} {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="position: absolute; padding-top: 8.5rem; width: 100%">
+  {% include 'footer.html'%}
+</div>
+
+<!-- player_video.html -->
+<!-- ... previous HTML code ... -->
+
+<!-- player_video.html -->
+<!-- ... previous HTML code ... -->
+
+<!-- player_video.html -->
+<!-- ... previous HTML code ... -->
+
+{% comment %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endcomment %}
+<script>
+  $(document).ready(function () {
+    $("#comment-form").on("submit", function (event) {
+      event.preventDefault();
+      $.ajax({
+        type: "POST",
+        url: $(this).attr("action"),
+        data: $(this).serialize(),
+        dataType: "json",
+        success: function (response) {
+          if (response.success) {
+            var comment = response.comment;
+
+            html =
+              '<div class="max-w-md mx-auto bg-gray-100 rounded-lg p-4 my-4"><div class="flex items-start space-x-4"><div class="flex-shrink-0"><div class="w-10 h-10 rounded-full bg-gray-300 flex justify-center items-center"><i class="fa fa-user-o text-base" aria-hidden="true"></i></div></div><div class="flex-grow"><h4 class="text-gray-900 font-bold text-lg">' +
+              comment.author +
+              '</h4><p class="text-gray-600 text-sm">' +
+              comment.created_at +
+              '</p></div></div><p class="mt-4 text-gray-800">' +
+              comment.text +
+              "</p></div>";
+            $("#comment-list").append(html);
+            $("#comment-form")[0].reset();
+          }
+        },
+        error: function (response) {
+          console.log(response.errors);
+        },
+      });
+    });
+  });
+</script>
+
+{% endblock %}

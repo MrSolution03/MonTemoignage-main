@@ -1,0 +1,80 @@
+<!--
+  Heads up! 👋
+
+  Plugins:
+    - @tailwindcss/forms
+-->
+{% load static %}
+
+<script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+
+<footer class="relative bg-blueGray-200 pt-8 pb-6" style="background-color:#454442">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-wrap text-left lg:text-left">
+      <div class="w-full lg:w-6/12 px-4">
+        <h4 class="text-3xl fonat-semibold text-blueGray-700 text-white">Réseaux sociaux</h4>
+        <h5 class="text-gray-500 text-gray-400  hover:opacity-75" >Faites un tour sur nos réseaux sociaux</h5>
+        <div class="mt-6 lg:mb-0 mb-6">
+          <button class="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button" onclick="openTwitterProfile()">
+            <i class="fab fa-twitter"></i>
+          </button>
+          <button class="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button" onclick="openFacebookProfile()">
+            <i class="fab fa-facebook-square"></i>
+          </button>
+          <button class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button" onclick="openInstagramProfile()">
+            <i class="fab fa-instagram"></i>
+          </button>
+          <button class="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button" onclick="openTikTokProfile()">
+            <i class="fab fa-tiktok"></i>
+          </button>
+        </div>
+      </div>
+      <div class="w-full lg:w-6/12 px-4">
+        <div class="flex flex-wrap items-top mb-6">
+          <div class="w-full px-4 ml-auto">
+            <div class="col-span-2 w-full" style="margin:0 auto;">
+              <p class="text-3xl fonat-semibold text-blueGray-700 text-white">A propos de nous</p>
+              
+                    <span class=" text-gray-500 text-gray-400  hover:opacity-75 text-center py-2">
+                    MonTemoignage est une plateforme chrétienne francophone qui publie des témoignages chrétiens dans le cadre de la construction du corps de Christ et de l'évangélisation.
+                    </span>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="my-6 border-blueGray-300">
+    <div class="flex flex-wrap items-center md:justify-between justify-center">
+      <div class="w-full md:w-4/12 px-4 mx-auto text-center">
+        <div class="text-sm text-blueGray-500 py-1 text-white">
+          Copyright © <span id="get-current-year">2023</span><a href="https://www.creative-tim.com/product/notus-js" class="text-blueGray-500 hover:text-gray-800" target="_blank"> MonTemoignage
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Add the JavaScript functions below the HTML code -->
+
+<script>
+  function openTwitterProfile() {
+    // Replace 'twitter_username' with your actual Twitter username or profile URL
+    window.open('https://twitter.com/@MonTemoignage', '_blank');
+  }
+
+  function openFacebookProfile() {
+    // Replace 'facebook_username' with your actual Facebook username or profile URL
+    window.open('https://www.facebook.com/https://www.facebook.com/profile.php?id=100093389512601', '_blank');
+  }
+
+  function openInstagramProfile() {
+    // Replace 'instagram_username' with your actual Instagram username or profile URL
+    window.open('https://www.instagram.com/weare_montemoignage', '_blank');
+  }
+
+  function openTikTokProfile() {
+    // Replace 'tiktok_username' with your actual TikTok username or profile URL
+    window.open('https://www.tiktok.com/weare_montemoignage', '_blank');
+  }
+</script>

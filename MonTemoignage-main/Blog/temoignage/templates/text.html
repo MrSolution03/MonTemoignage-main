@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Temoignage text
+{% endblock %}
+
+{% block content %}
+{% include 'navigation.html' %}
+
+<div style="position: relative; top: 6.7rem">
+  <div class="search-box-container">
+    <form method="GET" action="{% url 'text' %}">
+      <div class="search-box">
+        <div class="search-input">
+          <input
+            type="search"
+            name="search"
+            placeholder="recherche"
+            value="{{ request.GET.search }}" required
+          />
+        </div>
+        <div class="search-btn">
+          <button type="submit" style="width: 100%">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="categorie_filter">
+    <span>Categorie: </span>
+    {% for categorie in categorie %}
+      {% if categorie.cat_name %}
+       <a href="{% url 'text' %}?categorie={{ categorie.slug }}" {% if selected_categorie_id == categorie.slug %}{% endif %}>
+           {{ categorie.cat_name }}
+       </a>
+       {% endif %}
+    {% endfor %}
+     <a href="{% url 'text' %}" {% if not selected_categorie_id %}class="active"{% endif %}>
+    Toutes les catégories
+    </a>
+</div>  
+</div>
+
+<div class="text-page">
+  <div class="text">
+    <div class="article-container">
+      <div class="article-content">
+        {% if page %}
+        {% for article in page %}
+        {% if article.image %}
+        <div class="box bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-1.5">
+          <a href="{% url 'player_text' article.slug %}">
+            <img src="{{ article.image.url }}" alt="" />
+          </a>
+          <div class="p-5">
+            <div style="height: 10vh">
+              <h6 class="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white">
+                {{ article.titre }}
+              </h6>
+            </div>
+            <a href="{% url 'player_text' article.slug %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Lecture
+              <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        {% else %}
+        <img src="{% static 'default_img.jpg' %}" alt="image indiposnible" />
+        {% endif %}
+        {% empty %}
+        <h3 style="text-align: center">Pas de vidéos</h3>
+        {% endfor %}
+        {% else %}
+        <p>No Article available.</p>
+        {% endif %}
+      </div>
+      <div class="read-more">
+        {% if page.has_previous %}
+        <a href="?page={{ page.previous_page_number }}" class="load-more">Previous</a>
+        {% endif %}
+        {% if page.has_next %}
+        <a href="?page={{ page.next_page_number }}" class="load-more">Next</a>
+        {% endif %}
+      </div>
+    
+    </div>
+  </div>
+</div>
+
+{% include 'footer.html' %}
+{% endblock %}

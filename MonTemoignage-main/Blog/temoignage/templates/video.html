@@ -1,0 +1,81 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title%}Temoignage video{% endblock %}
+
+{% block content%}
+   {% include 'navigation.html'%}
+   <div style="position:relative; top:6.7rem">
+    <div class="search-box-container">
+        <form method="GET" action="{% url 'video' %}">
+            <div class="search-box">
+                <div class="search-input">
+                    <input type="search" name="search" placeholder="recherche" value="{{ request.GET.search }}" required>
+                </div>
+                <div class="search-btn">
+                    <button type="submit" style="width:100%"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </form>
+    </div> 
+    <div class="categorie_filter">
+        <span>Categorie: </span>
+        {% for categorie in categorie %}
+          {% if categorie.cat_name %}
+           <a href="{% url 'video' %}?categorie={{ categorie.slug}}" {% if selected_categorie_id == categorie.slug %}{% endif %}>
+               {{ categorie.cat_name }}
+           </a>
+           {% endif %}
+        {% endfor %}
+         <a href="{% url 'video' %}" {% if not selected_categorie_id %}class="active"{% endif %}>
+        Toutes les catégories
+        </a>
+    </div>   
+   </div>
+   <div class="video-page">
+    <div class="video">
+        <div class="video-container">
+            {% if page %}
+                {% for video in page %}
+                   {% if video.image %}             
+<div class="box bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-1.5">
+    <a href="{% url 'player_video' video.slug %}">
+        <img src="{{ video.image.url}}" alt="">
+        {% else %}
+            <img src="{% static 'default_img.jpg' %}" alt="image indiposnible"/>
+        {% endif %}
+    </a>
+    <div class="p-5">
+        <div style="height:10vh;">
+            <h6 class="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white">{{ video.titre }}</h6>
+        </div>
+        <a href="{% url 'player_video' video.slug %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Lecture&nbsp;&nbsp;
+            <i class="fa fa-play" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+                {% empty %}
+                   <h3 style="text-align:center">Pas de videos</h3>
+                {% endfor %}
+             {% else %}
+                <p>No videos available.</p>
+             {% endif %}
+            </div>
+            <div class="read-more">
+                {% if page.has_previous %}
+                    <a href="?search={{ search_query }}&page={{ page.previous_page_number }}" class="load-more">Previous</a>
+                {% endif %}
+                            
+                {% if page.has_next %}
+                    <a href="?search={{ search_query }}&page={{ page.next_page_number }}" class="load-more">Next</a>
+                {% endif %}
+            </div>
+           
+        </div>
+        </div>
+   </div>
+</div>
+    {% include 'footer.html'%}
+
+{% endblock %}

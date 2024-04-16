@@ -1,0 +1,227 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}Acceuil{% endblock %}
+
+{% block mycss %}
+   
+{% endblock mycss  %}
+
+{% block content %}
+{% include 'navigation.html'%}
+<div class="home">
+    <!-- component -->
+<script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
+
+<article x-data="slider" class="relative w-full flex flex-shrink-0 overflow-hidden shadow-2xl">
+    <div class="rounded-full bg-gray-600 text-white absolute top-5 right-5 text-sm px-2 text-center z-10">
+        <span x-text="currentIndex"></span>/
+        <span x-text="images.length"></span>
+    </div>
+
+    <template x-for="(image, index) in images">
+        <figure class="h-96" x-show="currentIndex == index + 1" x-transition:enter="transition transform duration-300"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition transform duration-300" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0">
+        <img :src="image" alt="Image" class="absolute inset-0 z-10 h-full w-full object-cover" />
+        <figcaption class="absolute inset-x-0 bottom-1 z-20 w-96 mx-auto p-4 font-light text-sm text-center tracking-widest leading-snug bg-gray-300 bg-opacity-25">
+            Apocalypse 12</br>
+            11. Ils l'ont vaincu à cause du sang de l'agneau et à cause de la parole de leur témoignage, et ils n'ont pas aimé leur vie jusqu'à craindre la mort.
+        </figcaption>
+        </figure>
+    </template>
+
+    <button @click="back()"
+        class="absolute left-14 top-1/2 -translate-y-1/2 w-11 h-11 flex justify-center items-center rounded-full shadow-md z-10 bg-gray-100 hover:bg-gray-200">
+        <svg class=" w-8 h-8 font-bold transition duration-500 ease-in-out transform motion-reduce:transform-none text-gray-500 hover:text-gray-600 hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7">
+            </path>
+        </svg>
+    </button>
+
+    <button @click="next()"
+    class="absolute right-14 top-1/2 translate-y-1/2 w-11 h-11 flex justify-center items-center rounded-full shadow-md z-10 bg-gray-100 hover:bg-gray-200">
+        <svg class=" w-8 h-8 font-bold transition duration-500 ease-in-out transform motion-reduce:transform-none text-gray-500 hover:text-gray-600 hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+        </svg>
+    </button>
+</article>
+
+</div>
+<div class="main-container">
+    
+    <div class="main left">
+        {% comment %} video {% endcomment %}
+        <h1 class="mb-4 text-xl  font-extrabold text-gray-900 dark:text-white">Temoignage videos</h1>
+        <div class="video">
+            <div class="video-container">
+                <div class="video-content">
+                    {% for video in myVideos %}
+                   {% if video.image %}
+                
+<div class="max-w-xm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-1.5 box">
+    <a href="{% url 'player_video' video.slug %}">
+        <img src="{{ video.image.url}}" alt="">
+        {% else %}
+            <img src="{% static 'default_img.jpg' %}" alt="image indiposnible"/>
+        {% endif %}
+    </a>
+    <div class="p-5" style="width:100%">
+        <div style="height:10vh">
+            <h6 class="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white">{{ video.titre }}</h6>
+        </div>
+        <a href="{% url 'player_video' video.slug %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Lecture
+            &nbsp;&nbsp;
+            <i class="fa fa-play" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+                {% endfor %}
+                </div>
+                <div class="read-more">
+                  <a href="/video">voir plus</a>
+                </div>
+            </div>
+        </div>
+        
+        {% comment %} text {% endcomment %}
+        <h1 class="mb-4 text-xl pt-4 font-extrabold text-gray-900 dark:text-white">Temoignage en text</h1>
+        <div class="text">
+            <div class="article-container">
+                <div class="article-content">
+                     {% for x in myArticles %}
+                   {% if x.image %}
+                
+<div class="max-w-xm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-1.5 box">
+    <a href="{% url 'player_text' x.slug %}">
+        <img src="{{ x.image.url}}" alt="">
+        {% else %}
+            <img src="{% static 'default_img.jpg' %}" alt="image indiposnible"/>
+        {% endif %}
+    </a>
+    <div class="p-5" style="width:100%">
+        <div style="height:10vh">
+            <h6 class="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white">{{ x.titre }}</h6>
+        </div>
+        <a href="{% url 'player_text' x.slug %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Lecture
+            <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        </a>
+    </div>
+</div>
+                {% endfor %}                  
+                </div>
+
+                <div class="article-content">
+                    
+                    
+                </div>
+                <div class="read-more">
+                  <a href="/text">Lire plus</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main right">
+        <div>
+            <div class="top">
+                <strong><p>Quelques site internet chretien</p></strong>
+                <ul>
+                    <li><a style="color:#3553fc;" href="https://emcitv.com/" target="blank">emci</a></li>
+                    <li><a href="https://www.topchretien.com/" target="blank">top chretien</a></li>
+                    <li><a href="https://frequencechretienne.fr/" target="blank">frequences chretiennes</a></li>
+                    <li><a href="https://casarhema.fr/" target="blank">casarhema</a></li>
+                </ul>
+            </div>
+            <div class="down">
+                <strong><p>Quelques articles chretiens</p></strong>
+                <ul>
+                    <li><a href="recevoirJesus/" target="blank">Recevoir Jesus</a></li>
+                    <li><a href="https://evlukoki.wordpress.com/2017/11/04/les-cours-daffermissements-chretiens-introduction-et-plan-du-cours/" target="blank">Affermissemnt chretienne</a></li>
+                    <li><a href="https://emcitv.com/bernard-emkeyes/texte/le-sang-de-jesus-vous-offre-une-vie-nouvelle-21950.html" target="blank">Le sang de Jesus</a></li>
+                </ul>
+            </div>
+    
+            
+        </div>
+        <div style="width:100%; height:1px; background: lightblue"></div>
+          <div style="width:100%; background:#454442; border-radius:0.4rem;">
+            <div class="newsletter-form my-6 mx-4">
+                <h3 class="text-lg mb-2 text-white text-center">S'inscrire à la newsletter</h3>
+                <form method="POST" class="flex flex-col" id="subscribe-form">
+                    {% csrf_token %}
+                    {{ form.email}}
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Subscribe</button>
+                </form>
+                <div class="mt-2 " id="subscribe-message">
+                </div>                
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+{% include 'footer.html'%}
+  
+<script>
+    $(document).ready(function() {
+        $('form#subscribe-form').on('submit', function(event) {
+          event.preventDefault(); // Prevent the default form submission
+      
+          // Get the form data
+          var formData = $(this).serialize();
+      
+          // Send the AJAX request
+          $.ajax({
+            type: 'POST',
+            url: '{% url 'acceuil' %}',
+            data: formData,
+            success: function(response) {
+              if (response.status === 'exists') {
+                $('#subscribe-message').html(response.message).removeClass('text-success').addClass('text-info');
+              } else if (response.status === 'success') {
+                $('#subscribe-message').html(response.message).removeClass('text-info').addClass('text-success');
+              }
+              $('#subscribe-message').css('color', 'lightgreen');
+              $('form#subscribe-form')[0].reset(); // Reset the form fields
+            },
+            error: function(xhr, errmsg, err) {
+              console.log(xhr.status + ': ' + xhr.responseText);
+            }
+          });
+        });
+      });
+      
+
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('slider', () => ({
+            currentIndex: 1,
+            images: [
+                'https://cdn.pixabay.com/photo/2018/02/12/10/45/heart-3147976_1280.jpg',
+                'https://cdn.pixabay.com/photo/2018/05/24/09/39/dove-3426159_1280.jpg',
+                'https://cdn.pixabay.com/photo/2019/07/14/07/24/jesus-4336337_1280.jpg',
+                'https://cdn.pixabay.com/photo/2020/07/15/03/49/praying-5406270_1280.jpg',
+                'https://cdn.pixabay.com/photo/2023/03/30/18/32/bread-7888483_1280.jpg'
+            ],
+            back() {
+                if (this.currentIndex > 1) {
+                    this.currentIndex = this.currentIndex - 1;
+                }
+            },
+            next() {
+                if (this.currentIndex < this.images.length) {
+                    this.currentIndex = this.currentIndex + 1;
+                } else if (this.currentIndex <= this.images.length){
+                    this.currentIndex = this.images.length - this.currentIndex + 1
+                }
+            },
+        }))
+    })
+    </script>
+    
+
+{% endblock %}
